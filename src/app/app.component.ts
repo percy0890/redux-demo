@@ -1,6 +1,6 @@
 import { INCREMENT } from './actions';
 import { IAppState, rootReducer } from './store';
-import { NgRedux } from 'ng2-redux';
+import { NgRedux, select } from 'ng2-redux';
 import { Component } from '@angular/core';
 
 @Component({
@@ -10,14 +10,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  counter = 0;
+  @select() counter;
 
   constructor(private ngRedux: NgRedux<IAppState>) {
-    ngRedux.subscribe(() => {
-      const currentState = ngRedux.getState();
-      this.counter = currentState.counter;
-      console.log(currentState);
-    });
+    // ngRedux.subscribe(() => {
+    //   const currentState = ngRedux.getState();
+    //   this.counter$ = currentState.counter;
+    // });
+
+    /**
+      if we use the subscribe method then we have to unsubscribe that by using ngDestroy life-cycle hook
+      else we'll face memory leak issue.
+      so, we are using select decorator to make it observable and then async pipe in our template..
+    * */
   }
 
   /**
