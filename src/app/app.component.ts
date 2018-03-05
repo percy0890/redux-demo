@@ -26,7 +26,7 @@ export class AppComponent {
   }
 
   /**
-    we are modifying the state here however
+    we were modifying the state here however
     when using the REDUX architecture we don't modify the state here...
   **/
   increment() {
